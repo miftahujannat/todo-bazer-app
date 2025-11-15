@@ -22,15 +22,14 @@ class TodoController extends Controller
      */
     public function postTodo(Request $request)
     {
-       //
        $image = null;
        if(isset($request->picture)){
-        $image = time(). '_'.$request->picture->getClientOriginalName(). '_'.$request->picture->extension;
+        $image = time(). '_'.$request->picture->getClientOriginalName(). '_'.$request->picture->getClientOriginalExtension();
         $request->picture->move(public_path('pictures'),$image);
        };
        Todo::create([
-         'name'=>$request->name, 
-         'price'=>$request->price, 
+         'name'=>$request->name,
+         'price'=>$request->price,
          'picture'=>$image
        ]);
        return redirect('/');
@@ -43,7 +42,7 @@ class TodoController extends Controller
     {
         $todo = Todo::findOrFail($id);
         $todo->update(['complete'=> ! $todo->complete]);
-        return redirect(to:'/');            
+        return redirect(to:'/');
     }
 
     /**
@@ -54,7 +53,7 @@ class TodoController extends Controller
     {
         $todo = Todo::findOrFail($id);
         $image =  $todo->picture;
-        
+
         $image = null;
         if(isset($request->picture)){
             if($todo->picture){
@@ -62,7 +61,7 @@ class TodoController extends Controller
             }
         }
         if(isset($request->picture)){
-        $image = time(). '_'.$request->picture->getClientOriginalName(). '_'.$request->picture->extension;
+        $image = time(). '_'.$request->picture->getClientOriginalName(). '_'.$request->picture->getClientOriginalExtension();
         $request->picture->move(public_path('pictures'),$image);
     };
 

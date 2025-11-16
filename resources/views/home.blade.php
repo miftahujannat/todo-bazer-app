@@ -38,12 +38,23 @@
                 <td class="px-6 py-4">
                     {{$todo->price}}
                 </td>
-                <td class="px-6 py-4">
-                    {{ $todo->complete?'complete': 'pending' }}
+                <td class="px-6 py-4 font-bold {{$todo->complete?'text-green-500': 'text-red-500'}}  " >
+                   <form action="/todos/status/{{$todo->id}}" method="POST" class="cursor-pointer">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit">
+                         {{$todo->complete? 'complete': 'pending' }}
+                    </button>
+
+                </form>
                 </td>
-                <td class="px-6 py-4">
-                    <a href="#" class="font-medium bg-blue-600 dark:bg-blue-500  px-4 py-2 text-white hover:underline">Edit</a>
-                    <a href="#" class="font-medium bg-red-600 dark:bg-red-500 text-white px-4 py-2 hover:underline">Delete</a>
+                <td class="px-6 py-4 flex justify-conter gap-4 items-center ">
+                    <a href="todos/update/{{$todo->id}}"      class="font-medium rounded bg-blue-600 dark:bg-blue-500  px-4 py-2 text-white ">Edit</a>
+                   <form action="/todos/delete/{{ $todo->id}}" method="post">
+                @csrf
+                @method('DELETE')
+                 <button type="submit" href="#" class="font-medium rounded bg-red-600 dark:bg-red-500 text-white px-4 py-2 ">Delete</button>
+            </form>
                 </td>
             </tr>
 

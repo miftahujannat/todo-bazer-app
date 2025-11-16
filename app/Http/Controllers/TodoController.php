@@ -41,8 +41,11 @@ class TodoController extends Controller
     public function updateStatus($id)
     {
         $todo = Todo::findOrFail($id);
-        $todo->update(['complete'=> ! $todo->complete]);
-        return redirect(to:'/');
+        // dd($todo);
+        $todo->complete=!$todo->complete;
+        $todo->save();
+        return redirect('/');
+
     }
 
     /**
@@ -77,10 +80,10 @@ class TodoController extends Controller
     /**
      * edit the specified resource in storage.
      */
-    public function edit(Request $id)
+    public function edit($id)
     {
        $todo = Todo::findOrFail($id);
-       return view(view: 'update',data: compact(var_name:'todos'));
+       return view('update', compact('todo'));
     }
 
     /**
@@ -90,7 +93,7 @@ class TodoController extends Controller
     {
         $todo = Todo::findOrFail($id);
          if($todo->picture){
-            unlink('picture/',$todo->picture);
+            unlink('pictures/'.$todo->picture);
             };
             $todo->delete();
             return redirect('/');

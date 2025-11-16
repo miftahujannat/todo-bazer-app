@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string(column:"name");
             $table->string(column:"price");
             $table->string(column:"picture")->nullable();
-            $table->string(column:"complete")->default(value:false);
+            $table->boolean(column:"complete")->default(value:false);
             $table->timestamps();
         });
     }
